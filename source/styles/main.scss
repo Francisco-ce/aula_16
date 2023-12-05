@@ -1,0 +1,9 @@
+//arquivos de variáveis
+
+@use 'variaveis';
+
+
+
+body {
+    background-color: variaveis.$corPrincipal;
+}

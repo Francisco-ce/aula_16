@@ -1,4 +1,22 @@
 const gulp = require('gulp');
+const sass = require('gulp-sass')(require('sass')); // importação composta
+const sourcemaps = require('gulp-sourcemaps');
+
+
+//pipe enadear as funções
+
+function compilaSass() {
+    return gulp.src('./source/styles/main.scss')
+        .pipe(sourcemaps.init())
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }))  
+        .pipe(sourcemaps.write('./maps'))                                    
+        .pipe(gulp.dest('./build/styles'));
+}
+
+
+
 
 
 function funcaoPadrao(callback) {
@@ -28,5 +46,12 @@ exports.dizerOi = dizerOi
 //execução das tarefas
 //primeiro importamos o Gulp 
 
+exports.sass =compilaSass;
+
+//usando os watchers do Gulp - deixa as tarefas rodando automático
+
+exports.watch = function() {
+    gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(compilaSass));
+}
 
 

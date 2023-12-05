@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.scss","variaveis.scss"],"names":[],"mappings":"AAMA,KACI,iBCPW","file":"../main.css","sourcesContent":["//arquivos de variáveis\r\n\r\n@use 'variaveis';\r\n\r\n\r\n\r\nbody {\r\n    background-color: variaveis.$corPrincipal;\r\n}","$corPrincipal: rgb(47, 0, 255);"]}
