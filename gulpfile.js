@@ -2,8 +2,10 @@ const gulp = require('gulp');
 
 
 function funcaoPadrao(callback) {
-    console.log("Execultando via Gulp")
-    callback();
+    setTimeout(function() {
+        console.log("Execultando via Gulp")
+        callback();
+    }, 2000);
 }
 
 function dizerOi(callback) {
@@ -17,7 +19,7 @@ function dizerTchau() {
 }
 
 // exports.default = funcaoPadrao
-exports.default = gulp.series(funcaoPadrao, dizerOi)
+exports.default = gulp.parallel(funcaoPadrao, dizerOi)
 exports.dizerOi = dizerOi
 
 //quando for função default (padrão) não precisa "chamar" no npm run gulp, mas quando for outra função é necessário "chamá-la" depois do gulp
@@ -25,4 +27,6 @@ exports.dizerOi = dizerOi
 
 //execução das tarefas
 //primeiro importamos o Gulp 
+
+
 
