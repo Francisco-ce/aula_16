@@ -1,9 +1,16 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass')); // importação composta
 const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
+const obfuscate = require('gulp-obfuscate');
+const imagemin = require('gulp-imagemin');
 
 
-//pipe enadear as funções
+//pipe encadear as funções
+
+function comprimeImagem() {
+    return gulp.src('./source/images/*')
+}
 
 function compilaSass() {
     return gulp.src('./source/styles/main.scss')
@@ -15,43 +22,19 @@ function compilaSass() {
         .pipe(gulp.dest('./build/styles'));
 }
 
-
-
-
-
-function funcaoPadrao(callback) {
-    setTimeout(function() {
-        console.log("Execultando via Gulp")
-        callback();
-    }, 2000);
+function comprimeJavaScript() {
+    return gulp.src('./source/scripts/*.js')
+        .pipe(uglify())
+        .pipe(obfuscate())
+        .pipe(gulp.dest('./build/scripts'));
 }
 
-function dizerOi(callback) {
-    console.log("olá Gulp")
-    dizerTchau();
-    callback();
-}
-
-function dizerTchau() {
-    console.log("tchau Gulp");
-}
-
-// exports.default = funcaoPadrao
-exports.default = gulp.parallel(funcaoPadrao, dizerOi)
-exports.dizerOi = dizerOi
-
-//quando for função default (padrão) não precisa "chamar" no npm run gulp, mas quando for outra função é necessário "chamá-la" depois do gulp
-
-
-//execução das tarefas
-//primeiro importamos o Gulp 
-
-exports.sass =compilaSass;
-
-//usando os watchers do Gulp - deixa as tarefas rodando automático
-
-exports.watch = function() {
+exports.default = function() {
     gulp.watch('./source/styles/*.scss', {ignoreInitial: false}, gulp.series(compilaSass));
+    gulp.watch('./source/images/*', {ignoreInitial: false}, gulp.series(comprimeImagem));
+    gulp.watch('./source/scripts/*.js', {ignoreInitial: false}, gulp.series(comprimeJavaScript));
 }
+
+
 
 
